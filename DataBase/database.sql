@@ -1,6 +1,6 @@
 -- Creación de la base de datos
-CREATE SCHEMA `motoscev6_nueva`;
-USE `motoscev6_nueva`;
+CREATE SCHEMA `motoscev7`;
+USE `motoscev7`;
 
 -- Creación de la tabla Ciudad
 CREATE TABLE Ciudad (
