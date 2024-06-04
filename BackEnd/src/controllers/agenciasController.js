@@ -1,5 +1,3 @@
-// /controllers/agenciasController.js
-
 const Agencias = require('../models/Agencias');
 
 const agenciasController = {};
@@ -90,4 +88,96 @@ agenciasController.delete = (req, res) => {
     });
 };
 
-module.exports = agenciasController;
+agenciasController.registerPhone = (req, res) => {
+    const idAgencia = req.params.id;
+    const telefono = req.body.telefono;
+  
+    Agencias.createPhone(idAgencia, telefono, (err, data) => {
+      if (err) {
+        res.status(500).json({
+          success: false,
+          message: 'Error al crear el teléfono',
+          error: err
+        });
+      } else {
+        res.status(201).json({
+          success: true,
+          message: 'Teléfono creado correctamente',
+          data: data
+        });
+      }
+    });
+};
+  
+agenciasController.getPhones = (req, res) => {
+    const idAgencia = req.params.id;
+  
+    Agencias.getPhones(idAgencia, (err, data) => {
+      if (err) {
+        res.status(500).json({
+          success: false,
+          message: 'Error al obtener los teléfonos',
+          error: err
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: 'Teléfonos obtenidos correctamente',
+          data: data
+        });
+      }
+    });
+};
+
+agenciasController.updatePhone = (req, res) => {
+    const idAgencia = req.params.id;
+    const phoneId = req.params.phoneId;
+    const newPhone = req.body.telefono;
+  
+    Agencias.updatePhone(idAgencia, phoneId, newPhone, (err, data) => {
+      if (err) {
+        res.status(500).json({
+          success: false,
+          message: 'Error al actualizar el teléfono',
+          error: err
+        });
+      } else if (!data) {
+        res.status(404).json({
+          success: false,
+          message: 'Teléfono no encontrado'
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: 'Teléfono actualizado correctamente',
+          data: data
+        });
+      }
+    });
+};
+
+agenciasController.deletePhone = (req, res) => {
+  const idAgencia = req.params.id;
+  const phoneId = req.params.phoneId;
+
+  Agencias.deletePhone(idAgencia, phoneId, (err, data) => {
+    if (err) {
+      res.status(500).json({
+        success: false,
+        message: 'Error al eliminar el teléfono',
+        error: err
+      });
+    } else if (!data) {
+      res.status(404).json({
+        success: false,
+        message: 'Teléfono no encontrado'
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: 'Teléfono eliminado correctamente',
+        data: data
+      });
+    }
+  });
+};

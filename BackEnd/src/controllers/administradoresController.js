@@ -121,11 +121,21 @@ administradoresController.login = (req, res) => {
                 message: err.message
             });
         } else {
-            res.status(200).json({
-                success: true,
-                message: 'Autenticación exitosa',
-                data: data
-            });
+            if (data) {
+                // Generar un token para el administrador
+                const token = jwt.sign({ id: data.ID_Admin }, 'tu_clave_secreta', { expiresIn: '1h' });
+
+                res.status(200).json({
+                    success: true,
+                    message: 'Autenticación exitosa',
+                    data: { ...data, token } // Incluye el token en la respuesta
+                });
+            } else {
+                res.status(401).json({
+                    success: false,
+                    message: 'Autenticación fallida: contraseña incorrecta'
+                });
+            }
         }
     });
 };

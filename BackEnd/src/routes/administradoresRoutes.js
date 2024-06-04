@@ -1,7 +1,7 @@
 // /routes/administradoresRoutes.js
 
 const administradoresController = require('../controllers/administradoresController');
-const verificarToken = require('./path_to/verificarToken');
+const verificarToken = require('../middleware/verificarToken');
 
 module.exports = (app) => {
     app.post('/api/administradores/create', administradoresController.register);
